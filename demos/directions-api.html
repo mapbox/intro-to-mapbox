@@ -44,6 +44,11 @@
 
         var directionsUrl = 'http://api.tiles.mapbox.com/v4/directions/mapbox.driving/' +
             points + '.json?access_token=' + L.mapbox.accessToken;
+
+        $.get(directionsUrl, function(data) {
+            // Do something with the directions returned from the API.
+            console.log(data);
+        });
     }
 
     </script>
