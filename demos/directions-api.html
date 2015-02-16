@@ -24,7 +24,10 @@
     map.on('click', function(e) {
         // Let's add a callback to makeMarker so that it can draw the route only
         // *after* it's done processing the marker adding.
-        makeMarker(e, drawRoute);
+        makeMarker(e, function() {
+            // We only want to drawRoute if there are at least two points.
+            if (waypoints.length > 1) drawRoute();
+        });
     });
 
     var waypoints = [];
