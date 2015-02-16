@@ -55,6 +55,12 @@
         $.get(directionsUrl, function(data) {
             // Do something with the directions returned from the API.
             var route = data.routes[0].geometry.coordinates;
+            route = route.map(function(point) {
+                // Turns out if we zoom out we see that the lat/lngs are flipped,
+                // which is why it didn't look like they were being added to the
+                // map. We can invert them here before drawing.
+                return [point[1], point[0]];
+            });
             polyline.setLatLngs(route);
         });
     }
