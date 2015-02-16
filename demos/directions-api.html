@@ -24,10 +24,7 @@
     map.on('click', function(e) {
         // Let's add a callback to makeMarker so that it can draw the route only
         // *after* it's done processing the marker adding.
-        makeMarker(e, function() {
-            // We only want to drawRoute if there are at least two points.
-            if (waypoints.length > 1) drawRoute();
-        });
+        makeMarker(e, drawRoute);
     });
 
     var waypoints = [];
@@ -35,11 +32,13 @@
 
     function makeMarker(e, done) {
         var marker = L.marker(e.latlng, { draggable: true }).addTo(map);
+        marker.on('dragend', drawRoute);
         waypoints.push(marker);
         return done();
     }
 
     function drawRoute() {
+        if (waypoints.length < 2) return;
         // Directions API request looks like
         // http://api.tiles.mapbox.com/v4/directions/mapbox.driving/
         //    -122.42,37.78;-77.03,38.91.json?access_token={access_token}
