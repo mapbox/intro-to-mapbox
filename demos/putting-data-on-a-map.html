@@ -23,6 +23,9 @@
     var map = L.mapbox.map('map', 'examples.map-i86nkdio')
         .setView([37.7729, -122.4333], 13);
 
+    // We found a dataset of all transit stops in SF that we can add to a map.
+    var stops = omnivore.topojson('https://cdn.rawgit.com/swissnexSF/Urban-Data-Challenge/master/public-transportation/san-francisco/geo/topojson/stops.json').addTo(map);
+
     </script>
 
 </body>
