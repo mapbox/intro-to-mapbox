@@ -1,0 +1,216 @@
+<!DOCTYPE html><html><head><title></title><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+<link href='https://www.mapbox.com/base/latest/base.css' rel='stylesheet' />
+<style type='text/css'>
+body {
+  font-family: 'Helvetica';
+  letter-spacing:-5px;
+  background:#3bb2d0;
+  background-size:100%;
+  color:#fff;
+  margin:0;
+  padding:0;
+  font-weight:bold;
+}
+
+h1, h2, h3, p {
+  margin:0;
+}
+
+em, a {
+  font-style:normal;
+  color:#f1f075;
+  text-decoration:none;
+}
+
+.bl {
+  font-style:normal;
+  color:#3887be;
+  text-decoration:none;
+}
+
+.gr {
+  font-style:normal;
+  color:#28353d;
+  text-decoration:none;
+}
+
+a {
+  background: #34d0e7;
+  color:#000;
+  text-decoration:none;
+}
+
+img {
+  width: 100%;
+}
+
+div {
+  cursor:pointer;
+  cursor:hand;
+  position:absolute;
+  top:0px;
+  left:0px;
+  padding:75px;
+  line-height:97%;
+}
+
+div.center {
+  text-align:center;
+}
+
+div.imageText {
+  text-shadow:0px 0px 5px rgba(0,0,0,0.2);
+}
+
+.show {
+  width: 70%;
+  margin-left: 45%;
+  margin-right: 45%;
+  position: fixed;
+  transform: translate(-50%, -50%);
+}
+.small {
+  width: 30%;
+  margin-left: 45%;
+  margin-right: 55%;
+  position: fixed;
+  transform: translate(-50%, -50%);
+}
+
+.fixed-text {
+  font-size: 145px;
+  text-align: center;
+}
+
+.tiny {
+  font-size: 30%;
+  letter-spacing: 1px;
+}
+
+.logo {
+  display: inline-block;
+  background: url(./img/mapbox.svg);
+  min-width: 610px;
+  min-height: 180px;
+  background-size: auto;
+  background-repeat: no-repeat;
+  vertical-align: middle;
+}
+
+.full {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font-size: 0;
+}
+.icon.preso:before {
+  width:inherit;
+  height:inherit;
+  font-size: inherit;
+}
+
+</style>
+<script type='text/javascript'>
+window.onload = function() {
+    var s = document.getElementsByTagName('div'), ti;
+    if (!s) return;
+    big = { current: 0, forward: fwd, reverse: rev, go: go, length: s.length };
+    function go(n) {
+        big.current = n;
+        var i = 1e3, e = s[n], t = parseInt(e.dataset.timeToNext || 0, 10);
+        document.body.className = e.dataset.bodyclass || '';
+        for (var k = 0; k < s.length; k++) s[k].style.display = 'none';
+        e.style.display = 'inline';
+        if (e.className != 'full') e.style.fontSize = i + 'px';
+        if (e.firstChild && e.firstChild.nodeName === 'IMG') {
+            document.body.style.backgroundImage = 'url("' + e.firstChild.src + '")';
+            e.firstChild.style.display = 'none';
+            if ('classList' in e) e.classList.add('imageText');
+        } else {
+            document.body.style.backgroundImage = '';
+            document.body.style.backgroundColor = e.style.backgroundColor;
+        }
+        if (ti !== undefined) window.clearInterval(ti);
+        if (t > 0) ti = window.setTimeout(fwd, (t * 1000));
+        while ((e.offsetWidth > window.innerWidth ||
+            e.offsetHeight > window.innerHeight) && i >= 0) {
+            e.style.fontSize = (i -= 2) + 'px';
+        }
+        e.style.marginTop = ((window.innerHeight - e.offsetHeight) / 2) + 'px';
+        if (window.location.hash !== n) window.location.hash = n;
+        document.title = e.textContent || e.innerText;
+    }
+    document.onclick = function() { go(++big.current % (s.length)); };
+    function fwd() { go(Math.min(s.length - 1, ++big.current)); }
+    function rev() { go(Math.max(0, --big.current)); }
+    document.onkeydown = function(e) {
+        if (e.which === 39 || e.which === 34 || e.which === 40) fwd();
+        if (e.which === 37 || e.which === 33 || e.which === 38) rev();
+    };
+    document.ontouchstart = function(e) {
+        var x0 = e.changedTouches[0].pageX;
+        document.ontouchend = function(e) {
+            var x1 = e.changedTouches[0].pageX;
+            if (x1 - x0 < 0) fwd();
+            if (x1 - x0 > 0) rev();
+        };
+    };
+    function parse_hash() {
+        return Math.max(Math.min(s.length - 1,
+            parseInt(window.location.hash.substring(1), 10)), 0);
+    }
+    if (window.location.hash) big.current = parse_hash() || big.current;
+    window.onhashchange = function() {
+        var c = parse_hash();
+        if (c !== big.current) go(c);
+    };
+    go(big.current);
+};
+
+</script></head><body>
+<div><span class='fixed-text'>Making Maps with </span><span class='logo'></span><span class='fixed-text'>!</span></div>
+<div><a target='_blank' href='https://www.mapbox.com/bites/00095'>über example</a></div>
+<div>A map is geographic data displayed as:
+  <br><em>a basemap or baselayer,</em>
+  <br>and
+  <br><em>feature layer(s)</em>
+</div>
+<div>Mapbox also has APIs for
+  <br><a target='_blank' href='https://www.mapbox.com/developers/api/directions/'>directions</a>,
+  <br><a target='_blank' href='https://www.mapbox.com/developers/api/geocoding/'>geocoding</a>,
+  <br><a target='_blank' href='https://www.mapbox.com/developers/api/static/'>static maps</a>,
+  <br><a target='_blank' href='https://www.mapbox.com/developers/api/surface/'>vector tile surface queries</a>
+</div>
+
+<div> Basemaps:</div>
+<div>A basemap is geographic data in the form of <em class='marker preso icon'>points</em>, <em class='icon preso polyline'>lines</em>, and <em class='icon polygon preso'>polygons</em> that has been styled and then 'baked' into '<em>tiles</em>'.</div>
+<div> These tiles are stored on a server. <br>They are displayed in your browser by a mapping library such as <a href='http://mapbox.com/mapbox.js' target='_blank'>Mapbox.js</a></div>
+
+<div class='full'><iframe width="100%" height="90%" frameBorder="0" src="https://a.tiles.mapbox.com/v4/camilleanne.l75nmmim.html?access_token=pk.eyJ1IjoiYW5kcmVhc3ZpZ2xha2lzIiwiYSI6IlVremRqN0kifQ.CFFJsLuWWyuhgsZTb51jWg"></iframe></div>
+<div class='full'><iframe width="100%" height="90%" frameBorder="0" src="https://a.tiles.mapbox.com/v4/andreasviglakis.76e0cee7.html?access_token=pk.eyJ1Ijoic2FtYW4iLCJhIjoiS1ptdnd0VSJ9.19qza-F_vXkgpnh80oZJww#14/39.4806/-106.0391"></iframe></div>
+<div class='full'><iframe width="100%" height="90%" frameBorder="0" src="https://a.tiles.mapbox.com/v4/camilleanne.l75nj87c.html?access_token=pk.eyJ1Ijoic2FtYW4iLCJhIjoiS1ptdnd0VSJ9.19qza-F_vXkgpnh80oZJww"></iframe></div>
+
+<div>You can have basemap layers with transparency:</div>
+<div class='full'><iframe width="100%" height="90%" frameBorder="0" src="https://a.tiles.mapbox.com/v4/katydecorah.77fcdfae.html?access_token=pk.eyJ1Ijoia2F0eWRlY29yYWgiLCJhIjoiNGxUd0FiRSJ9.W6JiC41LhSNbMQjuF3NGhA#7/42.880/-71.884"></iframe></div>
+<div class='full'><iframe width="100%" height="90%" frameBorder="0" src="https://a.tiles.mapbox.com/v4/katydecorah.d9fe552f.html?access_token=pk.eyJ1Ijoia2F0eWRlY29yYWgiLCJhIjoiNGxUd0FiRSJ9.W6JiC41LhSNbMQjuF3NGhA#7/42.880/-71.884"></iframe></div>
+<div class='full'><iframe width="100%" height="90%" frameBorder="0" src="https://a.tiles.mapbox.com/v4/katydecorah.7352c835.html?access_token=pk.eyJ1Ijoia2F0eWRlY29yYWgiLCJhIjoiNGxUd0FiRSJ9.W6JiC41LhSNbMQjuF3NGhA#7/42.880/-71.884"></iframe></div>
+
+<div>You can make a basemap with any sort of geographic data:</div>
+<div class='full'><iframe width="100%" height="90%" frameBorder="0" src="https://api.tiles.mapbox.com/v4/dnomadb.bb25144e/page.html?access_token=pk.eyJ1IjoiZG5vbWFkYiIsImEiOiJEak5aTXdZIn0.UtQIRl-MzHHZk6TIAHSWww#3/26.82/-105.64"></iframe></div>
+
+<div>And this data can be styled many different ways:</div>
+<div class='full'> <iframe width="100%" height="90%" frameBorder="0" src="https://a.tiles.mapbox.com/v4/saman.292fb860.html?access_token=pk.eyJ1Ijoic2FtYW4iLCJhIjoiS1ptdnd0VSJ9.19qza-F_vXkgpnh80oZJww#12/37.7774/-122.4069"></iframe></div>
+<div class='full'><iframe width='100%' height='90%' frameBorder='0' src='https://a.tiles.mapbox.com/v4/camilleanne.l8230l36/attribution,zoompan,zoomwheel,geocoder,share.html?access_token=pk.eyJ1IjoiY2FtaWxsZWFubmUiLCJhIjoiN0pleXVXTSJ9.olk86fBWmW6kFpmyFfTDqw#12/37.7774/-122.4069'></iframe></div>
+
+<div>Feature layers:</div>
+<div>A feature layer is geographic data in the form of <em class='marker preso icon'>points</em>, <em class='icon preso polyline'>lines</em>, and <em class='icon polygon preso'>polygons</em> that is displayed on a tiled basemap with a javascript mapping library.</div>
+<div class='full'><iframe width='100%' height='90%' frameBorder='0' src='https://www.mapbox.com/bites/00090'></iframe></div>
+
+<div>Quick detour -- <a href='http://geojson.io' target='_blank'>geojson</em></a></div>
+
+<div>Demo time! Lets get some data and make a map.</div>
+
+<div>Geographic analysis in the browser with <a target='_blank' href='http://turfjs.org'>turf</a></div>
+<div class='full'><iframe width='100%' height='90%' frameBorder='0' src='http://turfjs.org'></iframe></div>
+</body>
