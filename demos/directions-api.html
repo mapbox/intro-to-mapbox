@@ -22,8 +22,12 @@
         .setView([37.7729, -122.4333], 13);
 
     map.on('click', function(e) {
-        console.log(e.latlng);
+        makeMarker(e);
     });
+
+    function makeMarker(e) {
+        var marker = L.marker(e.latlng, { draggable: true }).addTo(map);
+    }
 
     </script>
 
