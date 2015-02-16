@@ -24,7 +24,12 @@
         .setView([37.7729, -122.4333], 13);
 
     // Let's use a set of style rules to make the markers smaller.
-    var markerOptions = {};
+    var markerOptions = {
+        radius: 3,
+        fillColor: "#08d",
+        weight: 0,
+        fillOpacity: 0.8
+    };
 
     // We'll need to add stops to a layer we define with the styling rule.
     var stopsLayer = L.geoJson(null, {
