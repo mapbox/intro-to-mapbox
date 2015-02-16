@@ -23,8 +23,18 @@
     var map = L.mapbox.map('map', 'examples.map-i86nkdio')
         .setView([37.7729, -122.4333], 13);
 
+    // Let's use a set of style rules to make the markers smaller.
+    var markerOptions = {};
+
+    // We'll need to add stops to a layer we define with the styling rule.
+    var stopsLayer = L.geoJson(null, {
+        pointToLayer: function (feature, latlng) {
+            return L.circleMarker(latlng, markerOptions);
+        }
+    });
+
     // We found a dataset of all transit stops in SF that we can add to a map.
-    var stops = omnivore.topojson('https://cdn.rawgit.com/swissnexSF/Urban-Data-Challenge/master/public-transportation/san-francisco/geo/topojson/stops.json').addTo(map);
+    var stops = omnivore.topojson('https://cdn.rawgit.com/swissnexSF/Urban-Data-Challenge/master/public-transportation/san-francisco/geo/topojson/stops.json', null, stopsLayer).addTo(map);
 
     </script>
 
