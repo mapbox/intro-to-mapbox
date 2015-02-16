@@ -38,8 +38,12 @@
         //    -122.42,37.78;-77.03,38.91.json?access_token={access_token}
         // We'll construct this using latlngs from the markers in waypoints.
         var points = waypoints.map(function(marker) {
-            console.log(marker);
+            var latlng = marker._latlng;
+            return [latlng.lng, latlng.lat].join(',');
         });
+
+        var directionsUrl = 'http://api.tiles.mapbox.com/v4/directions/mapbox.driving/' +
+            points + '.json?access_token=' + L.mapbox.accessToken;
     }
 
     </script>
