@@ -16,10 +16,14 @@
     <div id='map'></div>
 
     <script>
-    
+
     L.mapbox.accessToken = 'pk.eyJ1IjoibGJ1ZCIsImEiOiJCVTZFMlRRIn0.0ZQ4d9-WZrekVy7ML89P4A';
     var map = L.mapbox.map('map', 'examples.map-i86nkdio')
         .setView([37.7729, -122.4333], 13);
+
+    map.on('click', function(e) {
+        console.log(e.latlng);
+    });
 
     </script>
 
