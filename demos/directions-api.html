@@ -22,15 +22,18 @@
         .setView([37.7729, -122.4333], 13);
 
     map.on('click', function(e) {
-        makeMarker(e);
+        // Let's add a callback to makeMarker so that it can draw the route only
+        // *after* it's done processing the marker adding.
+        makeMarker(e, drawRoute);
     });
 
     var waypoints = [];
     var polyline = L.polyline([]).addTo(map);
 
-    function makeMarker(e) {
+    function makeMarker(e, done) {
         var marker = L.marker(e.latlng, { draggable: true }).addTo(map);
         waypoints.push(marker);
+        return done();
     }
 
     function drawRoute() {
