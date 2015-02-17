@@ -26,6 +26,7 @@
     });
 
     var waypoints = [];
+    var polyline = L.polyline([]).addTo(map);
 
     function makeMarker(e) {
         var marker = L.marker(e.latlng, { draggable: true }).addTo(map);
@@ -47,7 +48,7 @@
 
         $.get(directionsUrl, function(data) {
             // Do something with the directions returned from the API.
-            console.log(data);
+            var route = data.routes[0].geometry.coordinates;
         });
     }
 
