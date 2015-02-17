@@ -19,7 +19,7 @@
 
     L.mapbox.accessToken = 'pk.eyJ1IjoibGJ1ZCIsImEiOiJCVTZFMlRRIn0.0ZQ4d9-WZrekVy7ML89P4A';
     var map = L.mapbox.map('map', 'examples.map-i86nkdio')
-        .setView([37.7729, -122.4333], 13);
+    .setView([37.7729, -122.4333], 13);
 
     map.on('click', function(e) {
         // Let's add a callback to makeMarker so that it can draw the route only
@@ -49,7 +49,7 @@
         }).join(';');
 
         var directionsUrl = 'http://api.tiles.mapbox.com/v4/directions/mapbox.driving/' +
-            points + '.json?access_token=' + L.mapbox.accessToken;
+        points + '.json?access_token=' + L.mapbox.accessToken;
 
         $.get(directionsUrl, function(data) {
             // Do something with the directions returned from the API.
@@ -64,7 +64,7 @@
         });
     }
 
-    </script>
+</script>
 
 </body>
 </html>
