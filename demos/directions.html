@@ -25,8 +25,11 @@
         makeMarker(e);
     });
 
+    var waypoints = [];
+
     function makeMarker(e) {
         var marker = L.marker(e.latlng, { draggable: true }).addTo(map);
+        waypoints.push(marker);
     }
 
     </script>
