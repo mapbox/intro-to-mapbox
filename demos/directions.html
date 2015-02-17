@@ -21,6 +21,10 @@
     var map = L.mapbox.map('map', 'examples.map-i86nkdio')
     .setView([37.7729, -122.4333], 13);
 
+    map.on('click', function(e) {
+        console.log(e.latlng);
+    });
+
     </script>
 
 </body>
