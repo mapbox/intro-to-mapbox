@@ -75,6 +75,7 @@ div.imageText {
   margin-right: 55%;
   position: fixed;
   transform: translate(-50%, -50%);
+  z-index: -1;
 }
 
 .fixed-text {
@@ -123,7 +124,7 @@ window.onload = function() {
         for (var k = 0; k < s.length; k++) s[k].style.display = 'none';
         e.style.display = 'inline';
         if (e.className != 'full') e.style.fontSize = i + 'px';
-        if (e.firstChild && e.firstChild.nodeName === 'IMG') {
+        if (e.firstChild && e.firstChild.nodeName === 'IMG' && e.firstChild.className !== 'small' &&  e.firstChild.className !== 'show') {
             document.body.style.backgroundImage = 'url("' + e.firstChild.src + '")';
             e.firstChild.style.display = 'none';
             if ('classList' in e) e.classList.add('imageText');
@@ -169,19 +170,28 @@ window.onload = function() {
 };
 
 </script></head><body>
-<div><span class='fixed-text'>Making Maps with </span><span class='logo'></span><span class='fixed-text'>!</span></div>
-<div><a target='_blank' href='https://www.mapbox.com/bites/00095'>über example</a></div>
+<div>Making maps with <span class='bl'>Mapbox!</span></div>
+<div><img class='small' src='./img/header-small.png'/></div>
+<div><a target='_blank' href='https://www.mapbox.com/bites/00095'>for example, an interactive map of the Iditarod race</a></div>
+
+<div><img class='small' src='./img/how-mapbox-works.png'/> </div>
+
 <div>A map is geographic data displayed as:
   <br><em>a basemap or baselayer,</em>
   <br>and
   <br><em>feature layer(s)</em>
 </div>
+
+<div><img class='small' src='./img/optimizing-data.png'/></div>
+
 <div>Mapbox also has APIs for
   <br><a target='_blank' href='https://www.mapbox.com/developers/api/directions/'>directions</a>,
   <br><a target='_blank' href='https://www.mapbox.com/developers/api/geocoding/'>geocoding</a>,
   <br><a target='_blank' href='https://www.mapbox.com/developers/api/static/'>static maps</a>,
   <br><a target='_blank' href='https://www.mapbox.com/developers/api/surface/'>vector tile surface queries</a>
 </div>
+
+<div><img class='small' src='./img/first-map.png'/> </div>
 
 <div> Basemaps:</div>
 <div>A basemap is geographic data in the form of <em class='marker preso icon'>points</em>, <em class='icon preso polyline'>lines</em>, and <em class='icon polygon preso'>polygons</em> that has been styled and then 'baked' into '<em>tiles</em>'.</div>
@@ -205,6 +215,8 @@ window.onload = function() {
 
 <div>Feature layers:</div>
 <div>A feature layer is geographic data in the form of <em class='marker preso icon'>points</em>, <em class='icon preso polyline'>lines</em>, and <em class='icon polygon preso'>polygons</em> that is displayed on a tiled basemap with a javascript mapping library.</div>
+<div><img class='small' src='./img/intro-to-turf.png'/> </div>
+
 <div class='full'><iframe width='100%' height='90%' frameBorder='0' src='https://www.mapbox.com/bites/00090'></iframe></div>
 
 <div>Quick detour -- <a href='http://geojson.io' target='_blank'>geojson</em></a></div>
