@@ -49,6 +49,7 @@
         $.get(directionsUrl, function(data) {
             // Do something with the directions returned from the API.
             var route = data.routes[0].geometry.coordinates;
+            polyline.setLatLngs(route);
         });
     }
 
